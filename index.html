@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Solar Teams: 10-30 In-Home Appointments a Month | Scalbl.io</title>
+  <meta name="description" content="We'll get your solar company 10-30 in-person appointments every month, or it's free.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Meta Pixel -->
+  <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1704508696858997');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none" alt=""
+    src="https://www.facebook.com/tr?id=1704508696858997&ev=PageView&noscript=1"></noscript>
+
+  <style>
+    :root {
+      --text: #0a0a0a;
+      --muted: #4b5563;
+      --blue: #1663eb;
+      --blue-dark: #0f4fc4;
+      --border: #e5e7eb;
+      --bg: #ffffff;
+      --card: #ffffff;
+      --soft: #f5f8ff;
+      --red: #b91c1c;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body {
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+    main { max-width: 1240px; margin: 0 auto; padding: 48px 16px 80px; text-align: center; }
+
+    .eyebrow {
+      display: inline-block; font-size: 14px; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--blue); margin-bottom: 16px;
+    }
+    h1 {
+      font-size: clamp(32px, 5.2vw, 60px); line-height: 1.12; font-weight: 800;
+      letter-spacing: -0.02em; margin: 0 auto 20px; max-width: 1100px;
+    }
+    .offer { font-size: clamp(18px, 2vw, 22px); margin: 0 auto 24px; max-width: 760px; line-height: 1.45; }
+    .offer strong { font-weight: 800; }
+    .bullets { list-style: none; padding: 0; margin: 0 0 24px; font-size: 19px; font-weight: 700; line-height: 1.55; }
+
+    /* Arrows pointing to the survey */
+    .arrows { display: flex; justify-content: center; gap: 28px; margin: 4px 0 12px; }
+    .arrows span { font-size: 40px; line-height: 1; animation: bounce 1.2s ease-in-out infinite; }
+    .arrows span:nth-child(2) { animation-delay: .15s; }
+    .arrows span:nth-child(3) { animation-delay: .3s; }
+    @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
+    @media (prefers-reduced-motion: reduce) { .arrows span { animation: none; } }
+
+    /* Survey */
+    .survey {
+      max-width: 620px; margin: 0 auto; text-align: left; background: var(--card);
+      border: 1px solid var(--border); border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(17, 24, 39, .08); padding: 28px 24px;
+    }
+    .survey.wide { max-width: 900px; }
+    .progress { height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; margin-bottom: 8px; }
+    .progress > div { height: 100%; width: 0; background: var(--blue); transition: width .3s ease; }
+    .step-label { font-size: 13px; color: var(--muted); font-weight: 600; margin-bottom: 18px; }
+    .step { display: none; }
+    .step.active { display: block; }
+    .step h2 { font-size: 22px; line-height: 1.3; margin: 0 0 18px; font-weight: 800; }
+    .options { display: grid; gap: 10px; }
+    .option {
+      width: 100%; text-align: left; font: inherit; font-size: 17px; font-weight: 600;
+      padding: 16px 18px; border: 2px solid var(--border); border-radius: 10px;
+      background: var(--bg); color: var(--text); cursor: pointer;
+      transition: border-color .15s, background .15s;
+    }
+    .option:hover, .option:focus-visible { border-color: var(--blue); background: var(--soft); outline: none; }
+    .option.selected { border-color: var(--blue); background: var(--soft); }
+
+    label { display: block; font-size: 14px; font-weight: 600; margin: 0 0 6px; }
+    .field { margin-bottom: 14px; }
+    input {
+      width: 100%; font: inherit; font-size: 17px; padding: 14px 14px;
+      border: 2px solid var(--border); border-radius: 10px; color: var(--text); background: var(--bg);
+    }
+    input:focus { border-color: var(--blue); outline: none; }
+    .error { color: var(--red); font-size: 14px; margin: -4px 0 12px; min-height: 0; }
+
+    .btn {
+      display: inline-block; width: 100%; font: inherit; font-size: 18px; font-weight: 700;
+      padding: 16px 20px; border: 0; border-radius: 10px; background: var(--blue); color: #fff; cursor: pointer;
+    }
+    .btn:hover { background: var(--blue-dark); }
+    .back {
+      background: none; border: 0; padding: 0; margin-top: 16px; font: inherit; font-size: 14px;
+      color: var(--muted); cursor: pointer; text-decoration: underline;
+    }
+    .fineprint { font-size: 13px; color: var(--muted); margin-top: 12px; text-align: center; }
+    .dq { text-align: center; }
+    .dq p { color: var(--muted); line-height: 1.5; }
+    .calendar-wrap iframe { display: block; border: 0; border-radius: 10px; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="eyebrow">Attention solar companies</div>
+    <h1>SOLAR TEAMS: We Have Cracked the Code to In-Home Appointments</h1>
+    <p class="offer"><strong>OUR OFFER:</strong> We'll get you 10-30 in-person appointments every month, <strong>or it's FREE.</strong></p>
+    <ul class="bullets">
+      <li>2-3+ extra bookings per day, pre-booked</li>
+      <li>Appointments sent straight to your calendar</li>
+      <li>Guaranteed or you don't pay</li>
+    </ul>
+
+    <div class="arrows" aria-hidden="true"><span>👇</span><span>👇</span><span>👇</span></div>
+
+    <section class="survey" id="survey" aria-live="polite">
+      <div class="progress"><div id="progressBar"></div></div>
+      <div class="step-label" id="stepLabel"></div>
+
+      <!-- 1 -->
+      <div class="step" data-step="1">
+        <h2>How many appointments would you like to add per month?</h2>
+        <div class="options" data-field="appointments">
+          <button type="button" class="option" data-value="10-15">10-15</button>
+          <button type="button" class="option" data-value="15-30">15-30</button>
+          <button type="button" class="option" data-value="30+">30+</button>
+        </div>
+      </div>
+
+      <!-- 2 -->
+      <div class="step" data-step="2">
+        <h2>How big is your team?</h2>
+        <div class="options" data-field="team">
+          <button type="button" class="option" data-value="Solo">Solo</button>
+          <button type="button" class="option" data-value="1-6">1-6</button>
+          <button type="button" class="option" data-value="6+">6+</button>
+        </div>
+        <button type="button" class="back">← Back</button>
+      </div>
+
+      <!-- 3 -->
+      <div class="step" data-step="3">
+        <h2>What is your marketing budget per month?</h2>
+        <div class="options" data-field="budget">
+          <button type="button" class="option" data-value="<1k">Less than $1k</button>
+          <button type="button" class="option" data-value="1-3k">$1k-$3k</button>
+          <button type="button" class="option" data-value="3k+">$3k+</button>
+        </div>
+        <button type="button" class="back">← Back</button>
+      </div>
+
+      <!-- 4 -->
+      <form class="step" data-step="4" id="contactForm" novalidate>
+        <h2>Where should we send your appointment details?</h2>
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="phone">Phone</label>
+          <input id="phone" name="phone" type="tel" autocomplete="tel" required>
+        </div>
+        <p class="error" id="formError" hidden></p>
+        <button type="submit" class="btn">Next: pick a time →</button>
+        <p class="fineprint">Your details are only used to book your call.</p>
+        <button type="button" class="back">← Back</button>
+      </form>
+
+      <!-- 5 -->
+      <div class="step" data-step="5">
+        <h2>Last step: book your strategy call</h2>
+        <div class="calendar-wrap" id="calendarWrap"></div>
+        <button type="button" class="back">← Back</button>
+      </div>
+
+      <!-- Disqualified -->
+      <div class="step dq" data-step="dq">
+        <h2>Thanks for your interest</h2>
+        <p>Our appointment program needs a marketing budget of at least $1k a month to hit the 10-30 appointment guarantee, so we're not the right fit just yet.</p>
+        <p>When your budget grows, come back and we'll get you booked in.</p>
+        <button type="button" class="back">← Change my answer</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      var BOOKING_URL = "https://scalbl-crmproper.vercel.app/book/s-io-leadflow-1a75cb";
+      var BOOKING_ORIGIN = "https://scalbl-crmproper.vercel.app";
+      var TOTAL = 5;
+
+      var answers = {};
+      var history = [];
+      var current = "1";
+      var steps = document.querySelectorAll(".step");
+      var survey = document.getElementById("survey");
+
+      function show(step, push) {
+        if (push !== false) history.push(current);
+        current = step;
+        steps.forEach(function (el) { el.classList.toggle("active", el.dataset.step === step); });
+        survey.classList.toggle("wide", step === "5");
+
+        var n = step === "dq" ? 3 : Number(step);
+        document.getElementById("progressBar").style.width = (n / TOTAL * 100) + "%";
+        document.getElementById("stepLabel").textContent = step === "dq" ? "" : "Step " + n + " of " + TOTAL;
+
+        var first = document.querySelector('.step.active input');
+        if (first) first.focus({ preventScroll: true });
+      }
+
+      function back() {
+        if (history.length) show(history.pop(), false);
+      }
+
+      // Multiple-choice steps
+      document.querySelectorAll(".options").forEach(function (group) {
+        group.addEventListener("click", function (e) {
+          var btn = e.target.closest(".option");
+          if (!btn) return;
+          group.querySelectorAll(".option").forEach(function (b) { b.classList.remove("selected"); });
+          btn.classList.add("selected");
+          answers[group.dataset.field] = btn.dataset.value;
+
+          var step = btn.closest(".step").dataset.step;
+          if (step === "3" && btn.dataset.value === "<1k") return show("dq");
+          show(String(Number(step) + 1));
+        });
+      });
+
+      document.querySelectorAll(".back").forEach(function (b) { b.addEventListener("click", back); });
+
+      // Contact details -> calendar pre-filled with them
+      document.getElementById("contactForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+        var name = document.getElementById("name").value.trim();
+        var email = document.getElementById("email").value.trim();
+        var phone = document.getElementById("phone").value.trim();
+        var err = document.getElementById("formError");
+
+        var msg = "";
+        if (!name) msg = "Please enter your name.";
+        else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) msg = "Please enter a valid email.";
+        else if (phone.replace(/\D/g, "").length < 8) msg = "Please enter a valid phone number.";
+        err.textContent = msg;
+        err.hidden = !msg;
+        if (msg) return;
+
+        answers.name = name;
+        answers.email = email;
+        answers.phone = phone;
+
+        // The booking widget reads ?name=&email=&phone= to pre-fill its form.
+        var src = BOOKING_URL + "?" + new URLSearchParams({ name: name, email: email, phone: phone }).toString();
+        var wrap = document.getElementById("calendarWrap");
+        var existing = wrap.querySelector("iframe");
+        if (!existing || existing.getAttribute("src") !== src) {
+          wrap.innerHTML = "";
+          var iframe = document.createElement("iframe");
+          iframe.src = src;
+          iframe.width = "100%";
+          iframe.height = "700";
+          iframe.setAttribute("frameborder", "0");
+          iframe.title = "Book your call";
+          wrap.appendChild(iframe);
+        }
+        show("5");
+        survey.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+
+      // Fire the Meta Pixel "Schedule" event once the booking widget reports a booking.
+      // The widget is on another domain, so it has to tell this page via postMessage.
+      var scheduled = false;
+      window.addEventListener("message", function (e) {
+        if (e.origin !== BOOKING_ORIGIN || scheduled) return;
+        var d = e.data;
+        if (typeof d === "string") { try { d = JSON.parse(d); } catch (_) { d = { type: d }; } }
+        var type = d && (d.type || d.event);
+        if (type !== "scalbl:booked" && type !== "booking_confirmed") return;
+        scheduled = true;
+        if (window.fbq) fbq("track", "Schedule", {
+          appointments: answers.appointments,
+          team_size: answers.team,
+          budget: answers.budget
+        });
+      });
+
+      show("1", false);
+    })();
+  </script>
+</body>
+</html>
