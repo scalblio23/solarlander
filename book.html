@@ -16,8 +16,36 @@
     n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
     t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
     document,'script','https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1704508696858997');
-    fbq('track', 'PageView');
+    (function () {
+      // Lead details from the survey; the pixel hashes these for advanced matching.
+      var q = new URLSearchParams(window.location.search);
+      var user = {};
+      if (q.get('email')) user.em = q.get('email').toLowerCase();
+      if (q.get('phone')) user.ph = q.get('phone').replace(/\D/g, '');
+      if (q.get('name')) {
+        var parts = q.get('name').trim().toLowerCase().split(/\s+/);
+        user.fn = parts[0];
+        if (parts.length > 1) user.ln = parts[parts.length - 1];
+      }
+      fbq('init', '1704508696858997', user);
+      fbq('track', 'PageView');
+
+      // Reaching this page means the survey was completed and qualified.
+      // Only count it once per lead per browser session, so reloads don't double up.
+      if (q.get('email') || q.get('phone')) {
+        var key = 'lead_tracked:' + (q.get('email') || q.get('phone'));
+        var seen = false;
+        try { seen = sessionStorage.getItem(key) === '1'; } catch (_) {}
+        if (!seen) {
+          fbq('track', 'Lead', {
+            appointments: q.get('appointments') || undefined,
+            team_size: q.get('team') || undefined,
+            budget: q.get('budget') || undefined
+          });
+          try { sessionStorage.setItem(key, '1'); } catch (_) {}
+        }
+      }
+    })();
   </script>
   <noscript><img height="1" width="1" style="display:none" alt=""
     src="https://www.facebook.com/tr?id=1704508696858997&ev=PageView&noscript=1"></noscript>
