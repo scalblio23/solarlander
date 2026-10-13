@@ -54,11 +54,11 @@
     }
     .offer { font-size: clamp(18px, 2vw, 22px); margin: 0 auto 24px; max-width: 760px; line-height: 1.45; }
     .offer strong { font-weight: 800; }
-    .bullets { list-style: none; padding: 0; margin: 0 0 24px; font-size: 19px; font-weight: 700; line-height: 1.55; }
+    .cta-line { margin: 0 0 24px; font-size: 19px; font-weight: 700; line-height: 1.55; }
 
     /* Arrows pointing to the survey */
-    .arrows { display: flex; justify-content: center; gap: 28px; margin: 4px 0 12px; }
-    .arrows span { font-size: 40px; line-height: 1; animation: bounce 1.2s ease-in-out infinite; }
+    .arrows { display: flex; justify-content: center; gap: 72px; margin: 4px 0 16px; }
+    .arrows span { display: block; line-height: 0; animation: bounce 1.2s ease-in-out infinite; }
     .arrows span:nth-child(2) { animation-delay: .15s; }
     .arrows span:nth-child(3) { animation-delay: .3s; }
     @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
@@ -116,13 +116,9 @@
     <div class="eyebrow">Attention solar companies</div>
     <h1>SOLAR TEAMS: We Have Cracked the Code to In-Home Appointments</h1>
     <p class="offer"><strong>OUR OFFER:</strong> We'll get you 10-30 in-person appointments every month, <strong>or it's FREE.</strong></p>
-    <ul class="bullets">
-      <li>2-3+ extra bookings per day, pre-booked</li>
-      <li>Appointments sent straight to your calendar</li>
-      <li>Guaranteed or you don't pay</li>
-    </ul>
+    <p class="cta-line">Fill the 12 sec survey below to start</p>
 
-    <div class="arrows" aria-hidden="true"><span>👇</span><span>👇</span><span>👇</span></div>
+    <div class="arrows" aria-hidden="true"><span><svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="#000" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15M5 12l7 7 7-7"/></svg></span><span><svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="#000" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15M5 12l7 7 7-7"/></svg></span><span><svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="#000" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15M5 12l7 7 7-7"/></svg></span></div>
 
     <section class="survey" id="survey" aria-live="polite">
       <div class="progress"><div id="progressBar"></div></div>
