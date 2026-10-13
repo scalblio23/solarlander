@@ -94,6 +94,15 @@
       border: 2px solid var(--border); border-radius: 10px; color: var(--text); background: var(--bg);
     }
     input:focus { border-color: var(--blue); outline: none; }
+    .phone-input {
+      display: flex; align-items: center; border: 2px solid var(--border); border-radius: 10px; background: var(--bg);
+    }
+    .phone-input:focus-within { border-color: var(--blue); }
+    .phone-input .prefix {
+      display: flex; align-items: center; gap: 12px; padding: 0 4px 0 14px; font-size: 17px; color: var(--text); white-space: nowrap;
+    }
+    .phone-input .flag { display: block; border-radius: 2px; }
+    .phone-input input { border: 0; padding-left: 8px; }
     .error { color: var(--red); font-size: 14px; margin: -4px 0 12px; min-height: 0; }
 
     .btn {
@@ -168,8 +177,11 @@
           <input id="email" name="email" type="email" autocomplete="email" required>
         </div>
         <div class="field">
-          <label for="phone">Phone</label>
-          <input id="phone" name="phone" type="tel" autocomplete="tel" required>
+          <label for="phone">What is your mobile number? *</label>
+          <div class="phone-input">
+            <span class="prefix"><svg class="flag" viewBox="0 0 60 30" width="30" height="15" aria-hidden="true"><defs><clipPath id="au-c"><path d="M0 0h30v15H0z"/></clipPath><clipPath id="au-t"><path d="M15 7.5h15v7.5zv7.5H0zH0V0zV0h15z"/></clipPath><path id="au-s" d="M0-9l2.1 4.4 4.9-1.1-2.2 4.4 3.9 3.1-4.9 1.1v5L0 4l-3.8 3.1v-5l-4.9-1.1 3.9-3.1-2.2-4.4 4.9 1.1z"/><path id="au-ss" d="M0-4l.9 2.8H3.8L1.5.5l.9 2.8L0 1.6-2.4 3.3-1.5.5-3.8-1.2H-.9z"/></defs><path fill="#012169" d="M0 0h60v30H0z"/><g clip-path="url(#au-c)"><path stroke="#fff" stroke-width="3" d="M0 0l30 15M30 0L0 15"/><path stroke="#C8102E" stroke-width="2" clip-path="url(#au-t)" d="M0 0l30 15M30 0L0 15"/><path stroke="#fff" stroke-width="5" d="M15 0v15M0 7.5h30"/><path stroke="#C8102E" stroke-width="3" d="M15 0v15M0 7.5h30"/></g><g fill="#fff"><use href="#au-s" transform="translate(15 22.5) scale(.7)"/><use href="#au-ss" transform="translate(45 25) scale(.9)"/><use href="#au-ss" transform="translate(37.5 13.5) scale(.9)"/><use href="#au-ss" transform="translate(45 4.5) scale(.9)"/><use href="#au-ss" transform="translate(52 11.5) scale(.9)"/><circle cx="48.5" cy="16" r="1"/></g></svg><span>+61</span></span>
+            <input id="phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="412 345 678" required>
+          </div>
         </div>
         <p class="error" id="formError" hidden></p>
         <button type="submit" class="btn">Next: pick a time →</button>
@@ -241,18 +253,32 @@
 
       document.querySelectorAll(".back").forEach(function (b) { b.addEventListener("click", back); });
 
+      // Australian numbers: strip a leading 0 or 61/+61 so the field holds just
+      // the 9-digit local part, e.g. 0403214320 -> 403214320 (sent as +61403214320).
+      function toAuLocal(v) {
+        var d = v.replace(/\D/g, "");
+        if (d.indexOf("61") === 0 && d.length > 9) d = d.slice(2);
+        return d.replace(/^0+/, "");
+      }
+      var phoneInput = document.getElementById("phone");
+      phoneInput.addEventListener("input", function () {
+        var cleaned = toAuLocal(phoneInput.value).slice(0, 9);
+        if (cleaned !== phoneInput.value) phoneInput.value = cleaned;
+      });
+
       // Contact details -> calendar pre-filled with them
       document.getElementById("contactForm").addEventListener("submit", function (e) {
         e.preventDefault();
         var name = document.getElementById("name").value.trim();
         var email = document.getElementById("email").value.trim();
-        var phone = document.getElementById("phone").value.trim();
+        var local = toAuLocal(document.getElementById("phone").value);
+        var phone = "+61" + local;
         var err = document.getElementById("formError");
 
         var msg = "";
         if (!name) msg = "Please enter your name.";
         else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) msg = "Please enter a valid email.";
-        else if (phone.replace(/\D/g, "").length < 8) msg = "Please enter a valid phone number.";
+        else if (!/^[2-478]\d{8}$/.test(local)) msg = "Please enter a valid Australian mobile number.";
         err.textContent = msg;
         err.hidden = !msg;
         if (msg) return;
