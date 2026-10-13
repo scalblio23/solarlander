@@ -29,22 +29,6 @@
       }
       fbq('init', '1704508696858997', user);
       fbq('track', 'PageView');
-
-      // Reaching this page means the survey was completed and qualified.
-      // Only count it once per lead per browser session, so reloads don't double up.
-      if (q.get('email') || q.get('phone')) {
-        var key = 'lead_tracked:' + (q.get('email') || q.get('phone'));
-        var seen = false;
-        try { seen = sessionStorage.getItem(key) === '1'; } catch (_) {}
-        if (!seen) {
-          fbq('track', 'Lead', {
-            appointments: q.get('appointments') || undefined,
-            team_size: q.get('team') || undefined,
-            budget: q.get('budget') || undefined
-          });
-          try { sessionStorage.setItem(key, '1'); } catch (_) {}
-        }
-      }
     })();
   </script>
   <noscript><img height="1" width="1" style="display:none" alt=""
