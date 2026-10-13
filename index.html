@@ -66,7 +66,6 @@
       border: 1px solid var(--border); border-radius: 16px;
       box-shadow: 0 10px 30px rgba(17, 24, 39, .08); padding: 28px 24px;
     }
-    .survey.wide { max-width: 900px; }
     .progress { height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; margin-bottom: 8px; }
     .progress > div { height: 100%; width: 0; background: var(--blue); transition: width .3s ease; }
     .step-label { font-size: 13px; color: var(--muted); font-weight: 600; margin-bottom: 18px; }
@@ -113,7 +112,6 @@
     .fineprint { font-size: 13px; color: var(--muted); margin-top: 12px; text-align: center; }
     .dq { text-align: center; }
     .dq p { color: var(--muted); line-height: 1.5; }
-    .calendar-wrap iframe { display: block; border: 0; border-radius: 10px; }
   </style>
 </head>
 <body>
@@ -185,13 +183,6 @@
         <button type="button" class="back">← Back</button>
       </form>
 
-      <!-- 5 -->
-      <div class="step" data-step="5">
-        <h2>🎉 Congrats, you are qualified! Book a call below:</h2>
-        <div class="calendar-wrap" id="calendarWrap"></div>
-        <button type="button" class="back">← Back</button>
-      </div>
-
       <!-- Disqualified -->
       <div class="step dq" data-step="dq">
         <h2>Thanks for your interest</h2>
@@ -204,9 +195,7 @@
 
   <script>
     (function () {
-      var BOOKING_URL = "https://scalbl-crmproper.vercel.app/book/s-io-leadflow-1a75cb";
-      var BOOKING_ORIGIN = "https://scalbl-crmproper.vercel.app";
-      var TOTAL = 5;
+      var TOTAL = 4;
 
       var answers = {};
       var history = [];
@@ -218,7 +207,6 @@
         if (push !== false) history.push(current);
         current = step;
         steps.forEach(function (el) { el.classList.toggle("active", el.dataset.step === step); });
-        survey.classList.toggle("wide", step === "5");
 
         var n = step === "dq" ? 3 : Number(step);
         document.getElementById("progressBar").style.width = (n / TOTAL * 100) + "%";
@@ -262,7 +250,7 @@
         if (cleaned !== phoneInput.value) phoneInput.value = cleaned;
       });
 
-      // Contact details -> calendar pre-filled with them
+      // Contact details -> booking page
       document.getElementById("contactForm").addEventListener("submit", function (e) {
         e.preventDefault();
         var name = document.getElementById("name").value.trim();
@@ -283,39 +271,11 @@
         answers.email = email;
         answers.phone = phone;
 
-        // The booking widget reads ?name=&email=&phone= to pre-fill its form.
-        var src = BOOKING_URL + "?" + new URLSearchParams({ name: name, email: email, phone: phone }).toString();
-        var wrap = document.getElementById("calendarWrap");
-        var existing = wrap.querySelector("iframe");
-        if (!existing || existing.getAttribute("src") !== src) {
-          wrap.innerHTML = "";
-          var iframe = document.createElement("iframe");
-          iframe.src = src;
-          iframe.width = "100%";
-          iframe.height = "700";
-          iframe.setAttribute("frameborder", "0");
-          iframe.title = "Book your call";
-          wrap.appendChild(iframe);
-        }
-        show("5");
-        survey.scrollIntoView({ behavior: "smooth", block: "start" });
-      });
-
-      // Fire the Meta Pixel "Schedule" event once the booking widget reports a booking.
-      // The widget is on another domain, so it has to tell this page via postMessage.
-      var scheduled = false;
-      window.addEventListener("message", function (e) {
-        if (e.origin !== BOOKING_ORIGIN || scheduled) return;
-        var d = e.data;
-        if (typeof d === "string") { try { d = JSON.parse(d); } catch (_) { d = { type: d }; } }
-        var type = d && (d.type || d.event);
-        if (type !== "scalbl:booked" && type !== "booking_confirmed") return;
-        scheduled = true;
-        if (window.fbq) fbq("track", "Schedule", {
-          appointments: answers.appointments,
-          team_size: answers.team,
-          budget: answers.budget
-        });
+        // Qualified: go to the booking page, which pre-fills the calendar from these params.
+        window.location.href = "book.html?" + new URLSearchParams({
+          name: name, email: email, phone: phone,
+          appointments: answers.appointments, team: answers.team, budget: answers.budget
+        }).toString();
       });
 
       show("1", false);

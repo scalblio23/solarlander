@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Book a Call | Scalbl.io</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Meta Pixel -->
+  <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+    document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1704508696858997');
+    fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none" alt=""
+    src="https://www.facebook.com/tr?id=1704508696858997&ev=PageView&noscript=1"></noscript>
+
+  <style>
+    :root {
+      --text: #0a0a0a;
+      --muted: #4b5563;
+      --blue: #1663eb;
+      --border: #e5e7eb;
+      --bg: #ffffff;
+      --soft: #f5f8ff;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; }
+    body {
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+    main { max-width: 1000px; margin: 0 auto; padding: 48px 16px 80px; text-align: center; }
+
+    .eyebrow { font-size: 16px; font-weight: 700; color: var(--blue); margin: 0 0 12px; }
+    h1 {
+      font-size: clamp(32px, 5.2vw, 56px); line-height: 1.12; font-weight: 800;
+      letter-spacing: -0.02em; margin: 0 0 28px;
+    }
+    .calendar {
+      border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+      box-shadow: 0 10px 30px rgba(17, 24, 39, .08);
+    }
+    .calendar iframe { display: block; border: 0; }
+
+    h2 { font-size: clamp(24px, 3vw, 32px); font-weight: 800; letter-spacing: -0.01em; margin: 64px 0 24px; }
+    .cases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; text-align: left; }
+    @media (max-width: 760px) { .cases { grid-template-columns: 1fr; } }
+    .case {
+      border: 1px solid var(--border); border-radius: 14px; padding: 24px 22px; background: var(--soft);
+    }
+    .case .client { font-size: 14px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin: 0 0 10px; }
+    .case .result { font-size: 30px; line-height: 1.15; font-weight: 800; margin: 0 0 4px; }
+    .case .period { font-size: 16px; font-weight: 600; color: var(--muted); margin: 0; }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="eyebrow">🎉 Congrats, you are qualified!</p>
+    <h1>Book a Call Below</h1>
+
+    <div class="calendar" id="calendar"></div>
+
+    <h2>Solar teams we're booking for</h2>
+    <div class="cases">
+      <div class="case">
+        <p class="client">Veralba Energy</p>
+        <p class="result">5-10 bookings</p>
+        <p class="period">per week</p>
+      </div>
+      <div class="case">
+        <p class="client">Solar Battery Direct</p>
+        <p class="result">40 bookings</p>
+        <p class="period">per month</p>
+      </div>
+      <div class="case">
+        <p class="client">Cable Co</p>
+        <p class="result">60 bookings</p>
+        <p class="period">per month</p>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      var BOOKING_URL = "https://scalbl-crmproper.vercel.app/book/s-io-leadflow-1a75cb";
+      var BOOKING_ORIGIN = "https://scalbl-crmproper.vercel.app";
+
+      // The survey sends name/email/phone plus its answers in the query string.
+      var params = new URLSearchParams(window.location.search);
+      var prefill = new URLSearchParams();
+      ["name", "email", "phone"].forEach(function (k) {
+        if (params.get(k)) prefill.set(k, params.get(k));
+      });
+
+      // The booking widget reads ?name=&email=&phone= to pre-fill its form.
+      var iframe = document.createElement("iframe");
+      iframe.src = BOOKING_URL + (prefill.toString() ? "?" + prefill.toString() : "");
+      iframe.width = "100%";
+      iframe.height = "700";
+      iframe.setAttribute("frameborder", "0");
+      iframe.title = "Book your call";
+      document.getElementById("calendar").appendChild(iframe);
+
+      // Fire the Meta Pixel "Schedule" event once the booking widget reports a booking.
+      // The widget is on another domain, so it has to tell this page via postMessage.
+      var scheduled = false;
+      window.addEventListener("message", function (e) {
+        if (e.origin !== BOOKING_ORIGIN || scheduled) return;
+        var d = e.data;
+        if (typeof d === "string") { try { d = JSON.parse(d); } catch (_) { d = { type: d }; } }
+        var type = d && (d.type || d.event);
+        if (type !== "scalbl:booked" && type !== "booking_confirmed") return;
+        scheduled = true;
+        if (window.fbq) fbq("track", "Schedule", {
+          appointments: params.get("appointments") || undefined,
+          team_size: params.get("team") || undefined,
+          budget: params.get("budget") || undefined
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
