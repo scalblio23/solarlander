@@ -196,6 +196,7 @@
   <script>
     (function () {
       var TOTAL = 4;
+      var LEAD_WEBHOOK = "https://hook.eu1.make.com/bee6pwnwct7i375autq1dnqj4cuefdv7";
 
       var answers = {};
       var history = [];
@@ -270,6 +271,17 @@
         answers.name = name;
         answers.email = email;
         answers.phone = phone;
+
+        // Send the lead to Make (CLIENT LEAD LIST tab 90 + Scalbl CRM). sendBeacon
+        // survives the redirect below; form-encoded avoids a CORS preflight.
+        var lead = new URLSearchParams({
+          name: name, email: email, phone: phone,
+          appointments: answers.appointments, team: answers.team, budget: answers.budget,
+          source: "S.IO Solar Funnel - " + location.href
+        });
+        if (!(navigator.sendBeacon && navigator.sendBeacon(LEAD_WEBHOOK, lead))) {
+          fetch(LEAD_WEBHOOK, { method: "POST", body: lead, keepalive: true }).catch(function () {});
+        }
 
         // Qualified: go to the booking page, which pre-fills the calendar from these params.
         window.location.href = "book.html?" + new URLSearchParams({
